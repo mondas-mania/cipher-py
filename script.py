@@ -32,16 +32,12 @@ def caesar_decode(encoded_text, shift, alphabet_str=string.ascii_lowercase):
 
 def keyed_caesar_encode(plain_txt, shift, alphabet_key, alphabet_str=string.ascii_lowercase):
     new_txt = caesar_encode(plain_txt, shift, alphabet_str)
-    idx = [alphabet_str.index(char) for char in new_txt]
-
     new_alphabet = new_alphabet = create_alphabet(alphabet_key, alphabet_str)
-    return ''.join([new_alphabet[id] for id in idx])
+    return substitution(new_txt, alphabet_str, new_alphabet)
 
 def keyed_caesar_decode(encoded_text, shift, alphabet_key, alphabet_str=string.ascii_lowercase):
     new_alphabet = create_alphabet(alphabet_key, alphabet_str)
-    idx = [new_alphabet.index(char) for char in encoded_text]
-
-    new_txt = ''.join([alphabet_str[id] for id in idx])
+    new_txt = substitution(encoded_text, new_alphabet, alphabet_str)
     return caesar_decode(new_txt, shift, alphabet_str)
 
 
@@ -51,6 +47,11 @@ def create_alphabet(alphabet_key, alphabet_str=string.ascii_lowercase):
     [new_alphabet.remove(char) for char in new_alphabet_key]
     new_alphabet = ''.join([char for char in new_alphabet_key] + new_alphabet)
     return new_alphabet
+
+def substitution(input, alphabet, new_alphabet):
+    idx = [alphabet.index(char) for char in input]
+    new_txt = ''.join([new_alphabet[id] for id in idx])
+    return new_txt
 
 encoded = caesar_encode(clean_input[0], 1)
 print(caesar_decode(encoded, 1))
