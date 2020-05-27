@@ -31,8 +31,8 @@ def caesar_decode(encoded_text, shift, alphabet_str=string.ascii_lowercase):
 ### Keyed Caesar
 
 def keyed_caesar_encode(plain_txt, shift, alphabet_key, alphabet_str=string.ascii_lowercase):
+    new_alphabet = create_alphabet(alphabet_key, alphabet_str)
     new_txt = caesar_encode(plain_txt, shift, alphabet_str)
-    new_alphabet = new_alphabet = create_alphabet(alphabet_key, alphabet_str)
     return substitution(new_txt, alphabet_str, new_alphabet)
 
 def keyed_caesar_decode(encoded_text, shift, alphabet_key, alphabet_str=string.ascii_lowercase):
