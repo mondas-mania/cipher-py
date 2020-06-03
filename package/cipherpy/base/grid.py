@@ -13,7 +13,7 @@ def create_grid(alphabet=string.ascii_lowercase.replace('j','')):
 
 # Take a digram and encrypt it with playfair rules using a grid
 
-def playfair_digram_encode(digram, new_txt, grid):
+def playfair_digram_encode(digram, grid):
     grid_size = grid.shape[0]
     (y1,x1) = [int(v) for v in np.where(grid==digram[0])]
     (y2,x2) = [int(v) for v in np.where(grid==digram[1])]

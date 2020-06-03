@@ -20,7 +20,7 @@ def encode(plain_txt, alphabet=string.ascii_lowercase, missed_char_dict={'j': 'i
             new_txt = new_txt[:i+1] + padding_char + new_txt[i+1:]
             digram = new_txt[i:i+2]
         
-        encoded_txt = encoded_txt + playfair_digram_encode(digram, new_txt, grid)
+        encoded_txt = encoded_txt + playfair_digram_encode(digram, grid)
         
         if len(new_txt) - i == 3:
             new_txt = new_txt + padding_char
