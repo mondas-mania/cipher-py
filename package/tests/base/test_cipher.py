@@ -1,4 +1,5 @@
 from cipherpy.base import substitution, atbash
+import pytest
 
 alphabet = "abcdefghijklmnopqrstuvwxyz"
 inv_alph = "zyxwvutsrqponmlkjihgfedcba"
@@ -7,12 +8,17 @@ mixed_alph = "abcdefghijklmzyxwvutsrqpon"
 def test_substitution():
     assert substitution("abcd", alphabet, inv_alph) == "zyxw"
     assert substitution("abcd", inv_alph, alphabet) == "zyxw"
-    # add test and handling for alphabets not matching 
-    # and text not being in alpbhabet
+    with pytest.raises(Exception) as diff_alphs:
+        substitution("a", "abcd", "abde")
+    assert "matching characters" in str(diff_alphs.value)
+    with pytest.raises(Exception) as non_alph_char:
+        substitution("abcdz", "abcd", "badc")
+    assert "cannot be found" in str(non_alph_char.value)
 
-# not worth mocking functions for atbash as it consists solely of two
-# internal functions
+
 def test_atbash():
     assert atbash("abcd") == "zyxw"
     assert atbash("abcd", mixed_alph) == "nopq"
-    # add test and handling for if string chars not in alphabet
+    with pytest.raises(Exception) as non_alph_char:
+        atbash("abcde", "abcd")
+    assert "cannot be found" in str(non_alph_char.value)
