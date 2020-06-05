@@ -1,4 +1,5 @@
 from cipherpy.base import keyed_alphabet, invert_alphabet
+import pytest
 
 regular_alph = "abcdefghijklmnopqrstuvwxyz"
 
@@ -12,8 +13,9 @@ def test_invert_alphabet():
 def test_keyed_alphabet():
     assert keyed_alphabet("b") == "bacdefghijklmnopqrstuvwxyz"
     assert keyed_alphabet("hello") == "heloabcdfgijkmnpqrstuvwxyz"
-    # Should remove any characters from the key that weren't in the alphabet
-    assert keyed_alphabet("hello99") == "heloabcdfgijkmnpqrstuvwxyz"
+    with pytest.raises(Exception) as not_in_alph:
+        keyed_alphabet("hello99")
+    assert "cannot be found in the given alphabet" in str(not_in_alph.value)
     assert keyed_alphabet("hello", "zyxwvutsrqponmlkjihgfedcba") == "helozyxwvutsrqpnmkjigfdcba"
     assert keyed_alphabet("") == regular_alph
     assert keyed_alphabet("", "") == ""
